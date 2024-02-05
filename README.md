@@ -75,6 +75,8 @@ to operate. There are three files that ICE uses to function:
 	- log.txt is where ICE logs relevant information. It will tell you if you're configuration is functioning
 	as well as when a host has started knocking, failed the sequence, or has successfully authenticated. 
 
+These files will be automatically generated when running ICE for the first time.
+
 If for whatever reason these files are deleted they can be restored with default values by simply running ICE again. This feature can
 also be used to regenerate the default configuration settings. 
 
