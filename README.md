@@ -10,15 +10,15 @@ To use ICE all you have to do is enter information into the config.txt file.
 Because ICE uses iptables to adjust rules, it requires root permissions
 to operate. There are three files that ICE uses to function:
 
-	- config.txt is shown above and it is where the port knocking sequence
-	and other rules are created. There are comments to assist users in understanding
-	what various things do.
+	- config.txt is where the port knocking sequence and other rules are created.
+ 	There are comments to assist users in understanding what various things do.
  
 	- whitelist.txt is a file that initializes with "127.0.0.1" only to allow machines to connect
 	to themselves. To add a host without having them knock simply append their IP address to the list.
  
-	- log.txt is where ICE logs relevant information. It will tell you if you're configuration is functioning
-	as well as when a host has started knocking, failed the sequence, or has successfully authenticated. 
+	- log.txt is where ICE logs relevant information. It will tell you if you're configuration is
+ 	functioning as well as when a host has started knocking, failed the sequence, or has successfully 
+  	authenticated. 
 
 These files will be automatically generated when running ICE for the first time.
 
