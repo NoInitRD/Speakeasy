@@ -1,22 +1,22 @@
 
 # Introduction
 
-ICE is a port knocking utility that dynamically adjusts firewall rules using iptables.
+Speakeasy is a port knocking utility that dynamically adjusts firewall rules using iptables.
 It was designed with am emphasis on speed, memory safety, and ease of use.
-To use ICE all you have to do is enter information into the config.txt file.
+To use Speakeasy all you have to do is enter information into the config.txt file.
 
 # Information
 
-Because ICE uses iptables to adjust rules, it requires root permissions
-to operate. There are three files that ICE uses to function:
+Because Speakeasy uses iptables to adjust rules, it requires root permissions
+to operate. There are three files that Speakeasy uses to function:
 
 * config.txt is where the port knocking sequence and other rules are created. There are comments to assist users in understanding what various things do.
 * whitelist.txt is a file that initializes with "127.0.0.1" only to allow machines to connect to themselves. To add a host without having them knock simply append their IP address to the list.
-* log.txt is where ICE logs relevant information. It will tell you if you're configuration is functioning as well as when a host has started knocking, failed the sequence, or has successfully authenticated. 
+* log.txt is where Speakeasy logs relevant information. It will tell you if you're configuration is functioning as well as when a host has started knocking, failed the sequence, or has successfully authenticated. 
 
-These files will be automatically generated when running ICE for the first time.
+These files will be automatically generated when running Speakeasy for the first time.
 
-If for whatever reason these files are deleted they can be restored with default values by simply running ICE again. This feature can
+If for whatever reason these files are deleted they can be restored with default values by simply running Speakeasy again. This feature can
 also be used to regenerate the default configuration settings. 
 
 It is important to note that you should restrict read/write access to these files to prevent malicious behavior.
@@ -25,7 +25,7 @@ At this point in time this program DOES NOT automatically start up upon a reboot
 cron. You can create cronjobs by running the command "sudo crontab -e" and appending the job to the bottom of 
 the file. Run "man cron" for more information. 
 
-If you change the whitelist manually be sure to restart ICE to allow it to adjust rules accordingly.
+If you change the whitelist manually be sure to restart Speakeasy to allow it to adjust rules accordingly.
 
 > [!CAUTION]
 > If this program is used incorrectly it is possible to become remotely disbarred from your machine.

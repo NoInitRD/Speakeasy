@@ -1,2 +1,2 @@
-gcc -Wall -o ice src/ice.c
-sudo ./ice
+gcc -Wall -o speakeasy src/speakeasy.c
+sudo ./speakeasy

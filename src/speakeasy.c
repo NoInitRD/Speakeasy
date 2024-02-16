@@ -193,7 +193,7 @@ void parse_log_for_entries(Config* cfg)
 	
 	while(logString != NULL)
 	{			
-		logString = get_line_no_rewind(cfg->logFile, "ICE-log");
+		logString = get_line_no_rewind(cfg->logFile, "Speakeasy-log");
 		LogEntry* currLog = construct_log(logString);
 		
 		//set global pointer _main_log to currLog

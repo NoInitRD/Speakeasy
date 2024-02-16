@@ -163,7 +163,7 @@ void iptables_log_ports(char* startPort, char* endPort, char* host)
 				startPort, endPort);
 		
 		char cmd2[114];
-		sprintf(cmd2, "iptables -I LOGGING -p tcp --dport %s:%s -j LOG --log-prefix \"[ICE-log]: \" --log-level 4 > /dev/null 2>&1",
+		sprintf(cmd2, "iptables -I LOGGING -p tcp --dport %s:%s -j LOG --log-prefix \"[Speakeasy-log]: \" --log-level 4 > /dev/null 2>&1",
 				startPort, endPort);
 		
 		cmdResult = system(cmd1);
@@ -177,7 +177,7 @@ void iptables_log_ports(char* startPort, char* endPort, char* host)
 				host, startPort, endPort);
 		
 		char cmd2[130];
-		sprintf(cmd2, "iptables -I LOGGING -p tcp -s %s --dport %s:%s -j LOG --log-prefix \"[ICE-log]: \" --log-level 4 > /dev/null 2>&1",
+		sprintf(cmd2, "iptables -I LOGGING -p tcp -s %s --dport %s:%s -j LOG --log-prefix \"[Speakeasy-log]: \" --log-level 4 > /dev/null 2>&1",
 				host, startPort, endPort);
 
 		cmdResult = system(cmd1);
@@ -207,7 +207,7 @@ void iptables_stop_logging_host(char* startPort, char* endPort, char* host)
 			host, startPort, endPort);
 	
 	char cmd2[130];
-	sprintf(cmd2, "iptables -D LOGGING -p tcp -s %s --dport %s:%s -j LOG --log-prefix \"[ICE-log]: \" --log-level 4 > /dev/null 2>&1",
+	sprintf(cmd2, "iptables -D LOGGING -p tcp -s %s --dport %s:%s -j LOG --log-prefix \"[Speakeasy-log]: \" --log-level 4 > /dev/null 2>&1",
 			host, startPort, endPort);
 
 	int cmdResult;

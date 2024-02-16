@@ -19,10 +19,10 @@ unsigned int write_log(char* message)
 	char* currentTime = get_current_time();
 	
 	//output message into terminal
-	printf("[%s] ICE-LOG: %s\n", currentTime, message);
+	printf("[%s] Speakeasy-LOG: %s\n", currentTime, message);
 	
 	//if file handle, write and close
-	fprintf(log, "[%s] ICE-LOG: %s\n", currentTime, message);
+	fprintf(log, "[%s] Speakeasy-LOG: %s\n", currentTime, message);
 	fclose(log);
 	
 	return 1;
