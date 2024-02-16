@@ -27,6 +27,9 @@ the file. Run "man cron" for more information.
 
 If you change the whitelist manually be sure to restart Speakeasy to allow it to adjust rules accordingly.
 
+I included a very simple client shell script for authenticating with the server. You don't have to use this as long as you can knock ports in a way where only one request is sent. It hasn't been extensively
+tested so try to make sure that your sequence and the script work well before relying on the entire system to work.
+
 > [!CAUTION]
 > If this program is used incorrectly it is possible to become remotely disbarred from your machine.
 
