@@ -2,7 +2,7 @@
 # Introduction
 
 Speakeasy is a port knocking utility that dynamically adjusts firewall rules using iptables.
-It was designed with am emphasis on speed, memory safety, and ease of use.
+It was designed with an emphasis on speed, memory safety, and ease of use.
 To use Speakeasy all you have to do is enter information into the config.txt file.
 
 # Information
