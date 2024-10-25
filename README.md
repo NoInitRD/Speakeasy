@@ -37,7 +37,8 @@ tested so try to make sure that your sequence and the script work well before re
 
 ## Here is the default configuration:
 ```
-#timeout is in seconds, it describes how much time clients have#to complete the port knocking process
+#timeout is in seconds, it describes how much time clients have
+#to complete the port knocking process
 timeout=10
 
 #interval is in microseconds, 1 second = 1,000,000 microseconds,
