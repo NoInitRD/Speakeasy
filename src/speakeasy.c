@@ -106,11 +106,17 @@ void update_host_status(char* host, char* port)
 				//stop logging host and remove from whitelist
 				iptables_stop_logging_host("1", "65535", host);
 
-				unsigned int status = remove_line_from_file(whitelist, lineNum);
-				if(status)
-					write_log_two("Removed previously authenticated host from whitelist: ", host);
+				unsigned int fileStatus = remove_line_from_file(whitelist, lineNum);
+				if(fileStatus)
+					write_log_two("Removed previously authenticated host from whitelist file: ", host);
 				else
-					write_log_two("Failed to remove previously authenticated host from whitelist: ", host);
+					write_log_two("Failed to remove previously authenticated host from whitelist file: ", host);
+
+				unsigned int iptablesStatus = iptables_remove_host(host);
+				if(iptablesStatus)
+					write_log_two("Removed previously authenticated host from iptables: ", host);
+				else
+					write_log_two("Failed to remove previously authenticated host from iptables: ", host);
 
 				free_hostnode(node);
 				fclose(whitelist);

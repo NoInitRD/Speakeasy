@@ -131,6 +131,39 @@ unsigned int iptables_whitelist_host(char* host)
 }
 
 
+/* 
+ * this function removes a host from the whitelist
+ * using iptables returns a 1 if successful, otherwise 0
+ */
+unsigned int iptables_remove_host(char* host)
+{
+	if(host == NULL)
+		return 0;
+	
+	//max size IP is 15 bytes long
+	if(strlen(host) > 15)
+		return 0;
+	
+	//check if the rule already exists
+	if(!iptables_check_rule("ACCEPT", host))
+		return 0;
+	
+	//max size of command is 66 bytes
+	char cmd[66];
+	sprintf(cmd, "iptables -D INPUT -s %s -j ACCEPT > /dev/null 2>&1", host);
+	
+	//run command
+	int result = system(cmd);
+	
+	if(result == -1 || WEXITSTATUS(result) != 0)
+	{
+		write_log("Failed to run iptables remove host from whitelist command");
+		return 0;
+	}
+	return 1;
+}
+
+
 /*
  * this function sets up logging of ports in a specified
  * range with a specified host, to log one port without
