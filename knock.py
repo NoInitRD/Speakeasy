@@ -1,38 +1,30 @@
-from scapy.all import IP, TCP, sr1, send
+import socket
 import time
 import sys
 
 
 def send_syn_packet(host, port):
-    #create IP and TCP layers, S for SYN
-    ip = IP(dst=host)
-    tcp = TCP(sport=12345, dport=port, flags='S')
+    try:
+        #open a TCP socket quickly
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-    packet = ip / tcp
-    send(packet, verbose=0) 
-    print(f"Sent SYN packet to {host}:{port}")
-
-
-def check_port_access(host, port):
-    #create IP and TCP layers for checking access
-    ip = IP(dst=host)
-    tcp = TCP(sport=12345, dport=port, flags='S') 
-
-    #send SYN and wait for a response
-    response = sr1(ip / tcp, verbose=0, timeout=2)
-
-    if response and response.haslayer(TCP):
-        print(f"Response received from {host}:{port}")
-    else:
-        print(f"No response from {host}:{port}")
+        #very short timeout
+        sock.settimeout(0.5)
+        sock.connect((host, port))
+        sock.close()
         
+    except(socket.timeout, socket.error):
+        pass
+
+    finally:
+        print(f"Sent SYN-like packet (TCP connect attempt) to {host}:{port}")
+
 
 def print_help():
     help_message = (
         "Usage: python knock.py <host> <port1> <port2> <etc...>\n"
-        "This script is designed to perform port knocking on servers running Speakeasy.\n"
-        "It requires escalated privileges to run properly.\n"
-        "The last port in the sequence will be tested for access.\n"
+        "This script performs port knocking by attempting to connect to ports in sequence.\n"
+        "It does not require root privileges."
     )
     print(help_message)
     sys.exit(1)
@@ -45,11 +37,9 @@ def main():
     host = sys.argv[1]
     ports = [int(port) for port in sys.argv[2:]]
 
-    for port in ports[:-1]:
+    for port in ports:
         send_syn_packet(host, port)
-        time.sleep(1)
-
-    check_port_access(host, ports[-1])
+        time.sleep(0.2)  #small delay
 
 
 if __name__ == "__main__":

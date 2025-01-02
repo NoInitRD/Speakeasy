@@ -19,8 +19,7 @@ unsigned int write_file(char* fileName)
 
 /*
  * attempts to append a line to a file
- * returns 1 on successful write, otherwise
- * returns 0
+ * returns 1 on successful write, otherwise 0
  */
 unsigned int append_to_file(char* fileName, char* givenString)
 {
@@ -369,7 +368,6 @@ char** lines_of_file_to_str_array(FILE* fptr)
 		return NULL;
 	
 	//get number of lines in file
-	//also + 1 to fileSize to account for null
 	unsigned int numLines = count_lines(fptr);
 
 	//bounds checking
@@ -441,4 +439,69 @@ unsigned int skip_to_last_line(FILE* fptr)
 		return 0;
 	
 	return 1;
+}
+
+
+/*
+ * removes a line from a file by line number
+ * returns 1 if successful, otherwise 0
+ * 
+ * side effect: rewinds file pointer
+ */
+unsigned int remove_line_from_file(FILE* fptr, unsigned int lineNum)
+{
+    if (fptr == NULL)
+        return 0;
+
+    //get the number of lines in the file minus one for indexing
+    unsigned int numLines = count_lines(fptr);
+
+    //bounds checking
+    if (lineNum > numLines)
+        return 0;
+
+    //create temp file
+    FILE* temp = tmpfile();
+    if (!temp) {
+        //failed to create temporary file
+        return 0;
+    }
+
+    //rewind the file pointer to the beginning
+    rewind(fptr);
+
+    //copy all lines except the one to be removed
+    char* line = NULL;
+    size_t len = 0;
+    unsigned int lineNumber = 0;
+
+    while (getline(&line, &len, fptr) != -1)
+    {
+        lineNumber++;
+        if (lineNumber != lineNum)
+            fprintf(temp, "%s", line);
+
+        //free the memory associated with line
+        free(line);
+        line = NULL;
+        len = 0;
+    }
+
+    //free the line buffer one last time
+    free(line);
+
+    // Reopen the original file in write mode to overwrite it (this clears the file)
+    freopen(NULL, "w", fptr);  // Reopens fptr as write-only (truncates the file)
+
+    //rewind the temp file
+    rewind(temp);
+
+    //copy the temp file back to the original file
+    char c;
+    while ((c = fgetc(temp)) != EOF)
+        fputc(c, fptr);
+
+    //close the temp file
+    fclose(temp);
+    return 1;
 }

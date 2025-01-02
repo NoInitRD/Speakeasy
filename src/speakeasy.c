@@ -7,6 +7,7 @@
 #include <time.h>
 #include <limits.h>
 
+
 #include "general_utils.h"
 #include "file_utils.h"
 #include "logging.h"
@@ -94,6 +95,31 @@ void update_host_status(char* host, char* port)
 	//they've completed the sequence
 	if(knockingStatus == 2)
 	{
+		//handle hosts already whitelisted
+		FILE* whitelist = read_file("whitelist.txt");
+		if(whitelist != NULL)
+		{
+			//they've already been whitelisted
+			long lineNum = get_line_num(whitelist, host);
+			if(lineNum != -1 && lineNum != -2)
+			{
+				//stop logging host and remove from whitelist
+				iptables_stop_logging_host("1", "65535", host);
+
+				unsigned int status = remove_line_from_file(whitelist, lineNum);
+				if(status)
+					write_log_two("Removed previously authenticated host from whitelist: ", host);
+				else
+					write_log_two("Failed to remove previously authenticated host from whitelist: ", host);
+
+				free_hostnode(node);
+				fclose(whitelist);
+				return;
+			}
+			fclose(whitelist);
+		}
+
+		//otherwise whitelist them
 		iptables_stop_logging_host("1", "65535", host);
 		iptables_whitelist_host(host);
 		append_to_file("whitelist.txt", host);
